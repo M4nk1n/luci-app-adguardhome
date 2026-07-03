@@ -99,6 +99,21 @@ if [[ "${tls_enabled}" == "true" ]]; then
 fi
 [[ -z "${http_address}" ]] && http_address=${bind_host}:${bind_port}
 
+# 如果在“常规设置”中配置了自定义管理域名/端口，则优先使用它们，
+# 不再使用系统 hostname + dnsmasq domain（或 0.0.0.0 回退逻辑）拼出来的 HOST。
+WEB_HTTPS=$(uci get adguardhome.config.web_https_enable 2> /dev/null)
+WEB_HOST=$(uci get adguardhome.config.web_host 2> /dev/null)
+WEB_PORT=$(uci get adguardhome.config.web_port 2> /dev/null)
+if [[ -n "${WEB_HOST}" || -n "${WEB_PORT}" ]]; then
+	if [[ "${WEB_HTTPS}" == "1" ]]; then
+		PROTO="https"
+	else
+		PROTO="http"
+	fi
+fi
+[[ -n "${WEB_HOST}" ]] && HOST=$(echo "${WEB_HOST}" | awk '{print tolower($0)}')
+[[ -n "${WEB_PORT}" ]] && PORT=${WEB_PORT}
+
 ############################################################################################
 # Decision-making cade:
 ############################################################################################

@@ -177,3 +177,18 @@ msgstr "以此用户组权限运行"
 
 msgid "Configuration file"
 msgstr "配置文件"
+
+msgid "Web https"
+msgstr "管理界面使用 HTTPS"
+
+msgid "Web host"
+msgstr "管理界面域名"
+
+msgid "Web port"
+msgstr "管理界面端口"
+
+msgid "Custom domain used to access the AdGuard Home web interface on the status page. If set, it replaces the system hostname that would otherwise be used."
+msgstr "自定义在状态页显示的 AdGuard Home 管理入口所使用的域名，设置后将替代系统主机名拼接出的地址。"
+
+msgid "Custom port used to access the AdGuard Home web interface on the status page. If set, it replaces the automatically detected port."
+msgstr "自定义在状态页显示的 AdGuard Home 管理入口所使用的端口，设置后将替代自动识别出的端口。"

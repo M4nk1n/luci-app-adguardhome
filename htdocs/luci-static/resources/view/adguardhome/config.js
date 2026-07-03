@@ -94,6 +94,7 @@ return view.extend({
 		}
 		
 		s = m.section(form.NamedSection, 'config', 'adguardhome', _('General settings'));
+
 		o = s.option(form.Flag, 'enabled', _('Enable'));
 		o.default = o.disabled;
 		o.rmempty = false;
@@ -123,6 +124,26 @@ return view.extend({
 		o.value('redirect', _('Redirect 53 port to AdGuardHome'));
 		o.value('exchange', _('Use port 53 replace dnsmasq'));
 		o.default = 'none';
+
+		// 管理域名/端口：自定义状态页展示的 Web 管理入口地址，
+		// 不再使用系统 hostname + dnsmasq domain 拼接得到的 HOST
+		o = s.option(form.Flag, 'web_https_enable', _('Web https'));
+		o.enabled = '1';
+		o.disabled = '0';
+		o.default = o.disabled;
+		o.rmempty = true;
+
+		o = s.option(form.Value, 'web_host', _('Web host'),
+			_('Custom domain used to access the AdGuard Home web interface on the status page. If set, it replaces the system hostname + domain that would otherwise be used.'));
+		o.datatype = 'string';
+		o.placeholder = 'openwrt.lan';
+		o.rmempty = true;
+
+		o = s.option(form.Value, 'web_port', _('Web port'),
+			_('Custom port used to access the AdGuard Home web interface on the status page. If set, it replaces the automatically detected port.'));
+		o.datatype = 'port';
+		o.placeholder = '3000';
+		o.rmempty = true;
 
 		o = s.option(form.Value, 'web_username', _('Username for AdGuard Home'), _('The username you configured when you set up AdGuard Home'));
 		o.default = 'admin';
